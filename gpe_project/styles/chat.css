@@ -1,0 +1,37 @@
+.chatbox-wrapper {
+    position: relative;
+
+}
+.chatbox {
+    padding-top: 20px;
+    width: 400px;
+}
+.chatbox .bubbles-wrapper {
+    height: 350px;
+    overflow: scroll;
+    overflow-x: hidden;
+    border: solid lightgrey 5px ;
+    border-bottom: 0px;
+    border-radius: 15px 15px 0 0;
+}
+.bubble .author {
+    font-size: 15px;
+    text-decoration:  underline;
+}
+.bubble {
+    max-height: fit-content;
+    padding: 20px;
+    border-radius: 30px;
+    margin: 10px;
+}
+.bubble:nth-child(odd) {
+    background: darkblue;
+    color: white
+}
+.bubble:nth-child(even) {
+    background: lightgrey;
+}
+.bubble .sent {
+    font-size: 12px;
+    text-align: right;
+}
