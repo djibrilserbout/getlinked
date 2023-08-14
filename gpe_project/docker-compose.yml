@@ -1,0 +1,34 @@
+version: '3.9'
+services:
+  db:
+    container_name: "getlinked-db"
+    image: mysql:8.1
+    ports:
+      - "3306:3306"
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+    volumes:
+      - db:/var/lib/mysql
+    networks:
+      - backend
+  nextjs:
+    container_name: "getlinked-nextjs"
+    ports:
+      - "3000:3000"
+    build:
+      context: .
+      dockerfile: nextjs.Dockerfile
+    volumes:
+      - .:/usr/src/app
+    networks:
+      - backend
+volumes:
+  db:
+    driver: local
+networks:
+  backend:
+    driver: bridge
