@@ -1,6 +1,5 @@
 import prisma from '../../../../../lib/prisma';
 import {getSession} from "next-auth/react";
-import {getToken} from "next-auth/jwt";
 
 export default async function handler(req, res) {
     const session = await getSession({req})
@@ -19,7 +18,7 @@ export default async function handler(req, res) {
 
     }
     if (req.method === "POST") {
-        if(session?.role !== 'admin' && session?.role !== 'superadmin' && session?.user.id !== req.query.userId)
+        if (session?.role !== 'admin' && session?.role !== 'superadmin' && session?.user.id !== req.query.userId)
             return res.status(401).json({message: "Unauthorized"})
         try {
             const education = await prisma.education.create({

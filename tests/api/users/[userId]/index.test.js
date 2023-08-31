@@ -2,51 +2,12 @@ import handler from '../../../../pages/api/users/[userId]/index'
 import {prismaMock} from '../../../../lib/singleton'
 import {createRequest, createResponse} from "node-mocks-http";
 import * as nextAuthReact from 'next-auth/react';
+import {unauthorizedSession, ownUserSession, adminSession, superadminSession} from "../../../../lib/testVariables";
 
 jest.mock('next-auth/react');
 const nextAuthReactMocked = nextAuthReact
 
 describe('/api/users/[userId]/', () => {
-    const ownUserSession = {
-        user: {
-            name: 'usertest',
-            email: 'user.test@mail.com',
-            image: 'https://avatars.githubusercontent.com/u/54867968?v=4',
-            id: 'testid'
-        },
-        expires: '2023-09-30T07:25:23.720Z',
-        role: 'user'
-    }
-    const adminSession = {
-        user: {
-            name: 'otheruser',
-            email: 'otheruser.test@mail.com',
-            image: 'https://avatars.githubusercontent.com/u/54867968?v=4',
-            id: 'otherid'
-        },
-        expires: '2023-09-30T07:25:23.720Z',
-        role: 'admin'
-    }
-    const superadminSession = {
-        user: {
-            name: 'otheruser',
-            email: 'otheruser.test@mail.com',
-            image: 'https://avatars.githubusercontent.com/u/54867968?v=4',
-            id: 'otherid'
-        },
-        expires: '2023-09-30T07:25:23.720Z',
-        role: 'superadmin'
-    }
-    const unauthorizedSession = {
-        user: {
-            name: 'otheruser',
-            email: 'otheruser.test@mail.com',
-            image: 'https://avatars.githubusercontent.com/u/54867968?v=4',
-            id: 'otherid'
-        },
-        expires: '2023-09-30T07:25:23.720Z',
-        role: 'user'
-    }
 
     nextAuthReactMocked.getSession.mockImplementation((_options) => {
             return {data: null, status: 'loading'};
