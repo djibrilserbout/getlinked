@@ -11,9 +11,9 @@ export default async function handler(req, res) {
             },
         });
         if (experience)
-            res.status(200).json(experience);
+            return res.status(200).json(experience);
         if (!experience)
-            res.status(404).json({message: "Not found"});
+            return res.status(404).json({message: "Not found"});
     }
     if (req.method === "DELETE") {
         if(session?.role !== 'admin' && session?.role !== 'superadmin' && session?.user.id !== req.query.userId)
@@ -25,9 +25,9 @@ export default async function handler(req, res) {
                 }
             })
             if (experience)
-                res.status(200).json({message: "Successfully deleted!"});
+                return res.status(200).json({message: "Successfully deleted!"});
         } catch {
-            res.status(404).json({message: "Not Found"})
+            return res.status(404).json({message: "Not Found"})
         }
 
     }

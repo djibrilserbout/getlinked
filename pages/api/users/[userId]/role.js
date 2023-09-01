@@ -4,7 +4,7 @@ import {getSession} from "next-auth/react";
 export default async function handler(req, res) {
     const session = await getSession({req})
     if (req.method === "PUT") {
-        if (session?.role === 'superadmin') {
+        if (session?.role === 'superadmin' && req.query.userId !== session?.user.id) {
             if (req.body.action === 'grant') {
                 const user = await prisma.user.update({
                     where: {

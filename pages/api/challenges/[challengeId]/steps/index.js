@@ -11,9 +11,9 @@ export default async function handler(req, res) {
             },
         });
         if(steps)
-            res.status(200).json(steps);
+            return res.status(200).json(steps);
         if(!steps)
-            res.status(404).json({message: "Not found"});
+            return res.status(404).json({message: "Not found"});
     }
     if (req.method === "POST") {
         if(session?.role !== 'admin' && session?.role !== 'superadmin')

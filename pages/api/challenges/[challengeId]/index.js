@@ -10,9 +10,9 @@ export default async function handler(req, res) {
             },
         });
         if (challenge)
-            res.status(200).json(challenge);
+            return res.status(200).json(challenge);
         if (!challenge)
-            res.status(404).json({message: "Not found"});
+            return res.status(404).json({message: "Not found"});
     }
     if (req.method === "DELETE") {
         if(session?.role !== 'admin' && session?.role !== 'superadmin')
@@ -24,9 +24,11 @@ export default async function handler(req, res) {
                 }
             })
             if (challenge)
-                res.status(200).json({message: "Successfully deleted!"});
-        } catch {
-            res.status(404).json({message: "Not Found"})
+                return res.status(200).json({message: "Successfully deleted!"});
+            else
+                return res.status(404).json({message: "Error"})
+        } catch(e) {
+            return res.status(404).json({message: e.message})
         }
     }
     if (req.method === "PUT") {
