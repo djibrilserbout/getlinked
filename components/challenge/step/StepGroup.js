@@ -35,14 +35,13 @@ const StepGroup = ({challengeId, challenge, show, handleClose, isAdmin}) => {
     if (challengeId === -1)
         return <></>
     return (
-        <Card style={{width: '100%', display: show ? 'block' : 'none'}}>
-            <Card.Header>
-                {isAdmin && <Button variant={"primary"} onClick={handleShowForm}>Ajouter une étape</Button>}
+        <div  className={"bg-white text-black p-5 rounded-lg "} style={{ display: show ? 'block' : 'none'}}>
+            <div className={"flex justify-between"}>
+                <div className={"text-2xl font-bold"}>{challenge.name}</div>
+                {isAdmin && <Button className={'bg-gray-900 text-white text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium'} onClick={handleShowForm}>Ajouter une étape</Button>}
                 <CloseButton onClick={handleClose}/>
-            </Card.Header>
-            <Card.Body>
-                <Card.Title as={"h1"}>{challenge.name}</Card.Title>
-                <div>
+            </div>
+                <div className="container mx-auto my-20">
                     {
                         steps.map(step =>
                             <StepCard key={step.id}
@@ -52,12 +51,11 @@ const StepGroup = ({challengeId, challenge, show, handleClose, isAdmin}) => {
                         )
                     }
                 </div>
-            </Card.Body>
             <AddStepForm challengeId={challengeId}
                          show={showForm}
                          handleClose={handleCloseForm}
                          handleUpdate={handleUpdate}/>
-        </Card>
+        </div>
     );
 }
 

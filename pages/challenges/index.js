@@ -41,12 +41,11 @@ const Challenges = ({isAdmin}) => {
 
 
     return (
-        <div>
+        <>
             <Head>
                 <title>getLinked | Challenges</title>
             </Head>
-            <h1>Challenges disponibles : </h1>
-            <div style={{display: "flex"}}>
+            <div className={"container grid gap-1 md:grid-cols-2 sm:grid-cols-1"}>
                 <ChallengeGroup challenges={challenges}
                                 handleShow={handleShow}
                                 handleUpdate={handleUpdate}
@@ -58,7 +57,8 @@ const Challenges = ({isAdmin}) => {
                     handleClose={handleClose}
                     isAdmin={isAdmin}/>
             </div>
-        </div>
+            <div className="h-10 md:h-40"></div>
+        </>
     )
 }
 export default Challenges

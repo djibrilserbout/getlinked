@@ -1,6 +1,7 @@
 import {Button, Card} from "react-bootstrap";
 import ModifyChallengeForm from "./ModifyChallengeForm";
 import {useState} from "react";
+import Link from "next/link";
 
 const ChallengeCard = ({challenge, handleShow, handleUpdate, isAdmin}) => {
     const [show, setShow] = useState(false);
@@ -23,28 +24,33 @@ const ChallengeCard = ({challenge, handleShow, handleUpdate, isAdmin}) => {
     }
 
     return (
-        <Card style={{width: '20rem'}}>
-            <Card.Header>
+        <div className={"my-5"}>
+            <div className={"flex justify-between"}>
+                <div className={"text-xl font-bold"}>{challenge.name}</div>
                 {
-                    isAdmin && <div className={"admin-buttons"}>
-                        <Button variant={"warning"} size={"sm"} onClick={handleShowForm}>Modifier</Button>
-                        <Button variant={"danger"} size={"sm"} onClick={deleteChallenge}>Supprimer</Button>
+                    isAdmin && <div className={"space-x-2"}>
+                        <Button
+                            className={'bg-gray-900 text-white text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium'}
+                            onClick={handleShowForm}>Modifier</Button>
+                        <Button
+                            className={'bg-gray-900 text-white text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium'}
+                            onClick={deleteChallenge}>Supprimer</Button>
                     </div>
                 }
-            </Card.Header>
-            <Card.Body>
-                <Card.Title>{challenge.name}</Card.Title>
-                <Card.Text>{challenge.description}</Card.Text>
-                <Button variant={"primary"}
-                        onClick={() => handleShow(challenge.id)}
-                >Voir ce challenge
-                </Button>
-            </Card.Body>
+            </div>
+
+            <Card.Text>{challenge.description}</Card.Text>
+            <div className="my-5">
+                <button onClick={() => handleShow(challenge.id)}
+                        className="text-gray-200 block rounded-lg text-center font-medium leading-6 px-6 py-3 bg-gray-900 hover:bg-black hover:text-white">
+                    Voir le challenge
+                </button>
+            </div>
             <ModifyChallengeForm show={show}
                                  handleClose={handleClose}
                                  challenge={challenge}
                                  handleUpdate={handleUpdateCard}/>
-        </Card>
+        </div>
     )
 }
 

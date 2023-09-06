@@ -16,8 +16,8 @@ const UndeployButton = ({token, repoName, setMessage}) => {
     const {data: session} = useSession();
 
     return(
-        <button className="btn btn-danger"
-                onClick={() => removeDeployment()}>Supprimer le site</button>
+        <button className="shadow-xl font-bold bg-red-900 text-sm text-white p-2 rounded-lg"
+                onClick={() => removeDeployment()}>Enlever le déploiement</button>
     );
 }
 

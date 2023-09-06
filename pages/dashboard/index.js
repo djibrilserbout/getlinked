@@ -64,12 +64,11 @@ export default function Index({token, name}) {
                 <title>getLinked | Tableau de bord</title>
             </Head>
             <h1 className={"invisible"}>Tableau de bord</h1>
-            <h2 className={"mb-6 text-3xl"}>Gérer mes projets</h2>
-            <Row xs={1} md={4} className="g-4">
+            <div className={"grid md:grid-cols-4 sm:grid-cols-1"}>
                 {
                     repositories.map(repo => <RepositoryPreview key={repo.name} repo={repo} />)
                 }
-            </Row>
+            </div>
             <div className="h-10 md:h-40"></div>
         </div>
     );

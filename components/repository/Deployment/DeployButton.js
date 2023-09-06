@@ -20,8 +20,8 @@ const DeployButton = ({token, repoName, selectedBranch, setMessage}) => {
         }
     }
     return (
-        <button className="btn btn-primary"
-                onClick={() => deploy()}>Deployer</button>
+        <button className="shadow-xl font-bold bg-blue-900 text-sm text-white p-2 rounded-lg"
+                onClick={() => deploy()}>Deployer sur internet</button>
     )
 }
 export default DeployButton

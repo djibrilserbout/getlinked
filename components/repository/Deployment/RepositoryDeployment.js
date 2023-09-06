@@ -12,7 +12,7 @@ const RepositoryDeployment = ({repoInfos, selectedBranch, token}) => {
         return <>Loading...</>
     }
     return (
-        <div>
+        <div className={"mt-4"}>
             {!repoInfos.has_pages ?
                 <DeployButton token={token}
                               selectedBranch={selectedBranch}

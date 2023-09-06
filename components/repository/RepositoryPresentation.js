@@ -1,9 +1,9 @@
 const RepositoryPresentation = ({name, description}) => {
     return (
-        <div>
-            <h1 className={"text-5xl"}>{name}</h1>
-            <p>{description}</p>
-        </div>
+        <>
+            <h1 className={"text-3xl mb-4"}>{name}</h1>
+            <p className={"mb-4"}>{description}</p>
+        </>
     )
 }
 

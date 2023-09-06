@@ -97,32 +97,39 @@ const Repository = (props) => {
     }
     useEffect(() => {
         status === "authenticated" && getRepoInfos();
-    }, [status])
+    }, [status, repoInfos])
 
     if (status === "loading")
         return <RepositoryPlaceholder/>
     return (
         isNotFound ? <>Not Found</> :
             <>
-                {repoInfos && <RepositoryPresentation name={repoInfos.name} description={repoInfos.description} />}
-                <div>
-                    <Head>
-                        <title>getLinked | {repoInfos?.name}</title>
-                    </Head>
-                    {repoInfos?.has_pages ? <div>Déployé</div> : <div>Non déployé</div>}
-                    {deploymentInfos && <span>Disponible vers : {deploymentInfos.html_url} </span>}
+                <Head>
+                    <title>getLinked | {repoInfos?.name}</title>
+                </Head>
+                <div className={"bg-black border-b-2 rounded-tr-lg p-10 flex justify-between"}>
+                    <div>
+                        {repoInfos &&
+                            <RepositoryPresentation name={repoInfos.name} description={repoInfos.description}/>}
+                        {repoInfos?.has_pages ? <div className={"font-bold text-green-400"}>Déployé sur internet</div> :
+                            <div>Non déployé</div>}
+                    </div>
+                    {deploymentInfos &&
+                        <a className={"bg-white rounded-lg font-bold text-black p-5 border-solid border-2 hover:border-white hover:bg-transparent hover:text-white "}
+                           href={deploymentInfos.html_url}>Visiter le site</a>}
                 </div>
-                <div>Branches :
-                    <select id="branches" value={selectedBranch}
-                            onChange={(event) => setSelectedBranch(event.target.value)}>
-                        <option value="">--Choissisez une branche---</option>
-                        {branches.length ? branches?.map((branch, index) =>
-                            <option key={index} value={branch.name}>{branch.name}</option>) : "lkl"}
-                    </select>
+                <div className={" bg-black p-10"}>
+                    <div>Branche choisie  :
+                        <select className={"ml-4 text-black"} value={selectedBranch}
+                                onChange={(event) => setSelectedBranch(event.target.value)}>
+                            <option value="">--Choissisez une branche---</option>
+                            {branches.length ? branches?.map((branch, index) =>
+                                <option key={index} value={branch.name}>{branch.name}</option>) : "lkl"}
+                        </select>
+                    </div>
+                    <RepositoryDeployment repoInfos={repoInfos} selectedBranch={selectedBranch} token={props.token}/>
+                    <div className="h-10 md:h-40"></div>
                 </div>
-
-                <RepositoryDeployment repoInfos={repoInfos} selectedBranch={selectedBranch} token={props.token}/>
-
             </>
     )
 }
