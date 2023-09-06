@@ -1,8 +1,8 @@
 import {getSession, useSession} from "next-auth/react";
 import {useRouter} from "next/router";
 import {useEffect, useState} from "react";
-import { firebaseApp } from "../../lib/config";
-import { getDatabase, ref, set, push, get, child, serverTimestamp, onValue } from "firebase/database";
+import {firebaseApp} from "../../lib/config";
+import {getDatabase, ref, set, push, get, child, serverTimestamp, onValue} from "firebase/database";
 
 
 import EducationGroup from "../../components/user/education/EducationGroup";
@@ -26,7 +26,7 @@ const UserProfile = ({isSuperAdmin, isAdmin, isMine}) => {
         isHuman: false,
 
     };
-    const [messages, setMessages] = useState({OOO: {username: "none", msg: "jji", createdAt: "OOOO"} });
+    const [messages, setMessages] = useState({OOO: {username: "none", msg: "jji", createdAt: "OOOO"}});
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
     const handleUpdate = () => {
@@ -99,15 +99,13 @@ const UserProfile = ({isSuperAdmin, isAdmin, isMine}) => {
 
     useEffect(() => {
         setIsUpdated(false);
-        if (router.isReady)
-        {
+        if (router.isReady) {
             getUser()
         }
     }, [router.isReady, isUpdated])
 
-    useEffect( () => {
-        if (router.isReady)
-        {
+    useEffect(() => {
+        if (router.isReady) {
             setMessages([])
             getMessages()
         }
@@ -118,30 +116,27 @@ const UserProfile = ({isSuperAdmin, isAdmin, isMine}) => {
         return <>Loading...</>
     }
     return (
-        <div style={{margin: '20px'}}>
+        <div className={"mt-20"}>
             <Head>
                 <title>getLinked | {user.name}</title>
             </Head>
             {
                 (isSuperAdmin && !isMine) &&
-                <div className={"admin-buttons"}>
-                    <Button variant="danger" size={"sm"} onClick={grantPermissions}>Ajouter des permissions</Button>
-                    <Button variant="danger" size={"sm"} onClick={revokePermissions}>Enlever des permissions</Button>
+                <div className={"space-x-2 flex justify-end"}>
+                    <Button className={'bg-gray-900 text-white text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium'} onClick={grantPermissions}>Ajouter des permissions</Button>
+                    <Button className={'bg-gray-900 text-white text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium'} onClick={revokePermissions}>Enlever des permissions</Button>
                 </div>
             }
-            <div style={{margin: '20px', width: '80%'}}>
-                {
-                    (isAdmin || isMine) &&
-                    <div className={"admin-buttons"}>
-                        <Button variant={"warning"} size={"sm"} onClick={handleShow}>Modifier</Button>
-                    </div>
-                }
-                <ModifyProfileForm handleClose={handleClose} show={show} info={user} handleUpdate={handleUpdate}/>
+            <div>
 
-                <DeveloperProfile user={user} isAdmin={isAdmin} isMine={isMine}/>
-                <ExperienceGroup userId={userId} isAdmin={isAdmin} isMine={isMine}/>
-                <EducationGroup userId={userId} isAdmin={isAdmin} isMine={isMine}/>
-                <ChatBox messages={messages} />
+                <DeveloperProfile user={user} show={show} isAdmin={isAdmin} isMine={isMine} handleShow={handleShow} handleClose={handleClose} handleUpdate={handleUpdate}/>
+                <div className={"my-10"}>
+                    <div className="bg-white relative shadow rounded-lg text-black p-4">
+                        <ExperienceGroup userId={userId} isAdmin={isAdmin} isMine={isMine}/>
+                        <EducationGroup userId={userId} isAdmin={isAdmin} isMine={isMine}/>
+                    </div>
+                </div>
+                <ChatBox messages={messages}/>
 
             </div>
             <div>

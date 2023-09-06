@@ -41,28 +41,38 @@ const ExperienceCard = ({experience, handleUpdate, isAdmin, isMine}) => {
     }
 
     return (
-        <Card style={{marginTop: '10px', marginBottom: '10px'}}>
-            <Card.Body>
-                {
-                    (isAdmin || isMine) &&
-                    <div className={"admin-buttons"}>
-                        <Button variant="warning" size={"sm"} onClick={handleShow}>Modifier</Button>
-                        <Button variant="danger" size={"sm"} onClick={deleteExperience}>Supprimer</Button>
-                    </div>
-                }
-                <h4>{experience.companyName}</h4>
-                <Card.Title>{experience.name}</Card.Title>
-                <Card.Text>{experience.description}</Card.Text>
-            </Card.Body>
-            <Card.Footer className={"text-muted"}>
-                {experience.dateBegin} - {experience.dateFinish}
-            </Card.Footer>
+        <div>
+            <div className={"my-5"}>
+                <div className={"flex justify-between"}>
+                    <div className={"text-xl font-bold"}>{experience.name}</div>
+                    {
+                        (isAdmin || isMine) &&
+                        <div className={"space-x-2"}>
+                            <button onClick={handleShow}
+                               className={'bg-gray-900 text-white text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium'}>
+                                Modifier
+                            </button>
+                            <button onClick={deleteExperience}
+                               className={'bg-gray-900 text-white text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium'}>
+                                Supprimer
+                            </button>
+
+                        </div>
+                    }
+                </div>
+                <h4 className={"text-lg"}>{experience.companyName}</h4>
+                <div className={"text-gray-600"}>
+                    {experience.dateBegin} - {experience.dateFinish}
+                </div>
+                <div>{experience.description}</div>
+            </div>
+
 
             <ModifyExperienceForm handleClose={handleClose}
                                   show={show}
                                   experience={experience}
                                   handleUpdate={handleUpdateCard}/>
-        </Card>
+        </div>
     )
 }
 

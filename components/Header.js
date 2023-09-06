@@ -18,7 +18,7 @@ function classNames(...classes) {
 export default function Example() {
     const {data: session, status} = useSession();
     return (
-        <Disclosure as="nav" className="bg-gradient-to-tr from-gray-900 to-black">
+        <Disclosure as="nav" className="bg-gradient-to-tr from-gray-900 to-black pt-3">
             {({ open }) => (
                 <>
                     <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
@@ -27,7 +27,7 @@ export default function Example() {
                                 {/* Mobile menu button*/}
                                 <Disclosure.Button className="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
                                     <span className="absolute -inset-0.5" />
-                                    <span className="sr-only">Open main menu</span>
+                                    <span className="sr-only">Ouvrir le menu principal</span>
                                     {open ? (
                                         <XMarkIcon className="block h-6 w-6" aria-hidden="true" />
                                     ) : (
@@ -64,7 +64,7 @@ export default function Example() {
                                     <div>
                                         <Menu.Button className="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                                             <span className="absolute -inset-1.5" />
-                                            <span className="sr-only">Open user menu</span>
+                                            <span className="sr-only">Ouvrir menu utilisateur</span>
                                             <Image  className={"h-8 w-8 rounded-full"}
                                                     src={session.user.image}
                                                     width="35"
@@ -89,6 +89,7 @@ export default function Example() {
                                                         className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-lg text-grey-900 font-bold')}
                                                     >
                                                         {session.user.name}
+                                                        <button className={'mt-2 bg-transparent border border-black text-black hover:bg-gray-700 hover:text-white rounded-full px-3 py-2 text-sm font-medium'}> Voir le profil</button>
                                                     </a>
                                                 )}
                                             </Menu.Item>
@@ -98,7 +99,7 @@ export default function Example() {
                                                         href="#"
                                                         className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
                                                     >
-                                                        Paramètres
+                                                        Mes messages
                                                     </a>
                                                 )}
                                             </Menu.Item>
@@ -118,14 +119,14 @@ export default function Example() {
                             </div> :
                                 <div className="hidden sm:ml-6 sm:block">
                                     <div className="flex space-x-4">
-                                            <a
-                                                className={classNames('text-gray-300 hover:bg-gray-700 hover:text-white',
+                                            <button
+                                                className={classNames('hover:bg-transparent hover:text-gray-300 bg-gray-700 text-white',
                                                     'rounded-md px-3 py-2 text-sm font-medium'
                                                 )}
                                                 onClick={() => signIn('github')}
                                             >
                                                 Se connecter
-                                            </a>
+                                            </button>
                                     </div>
                                 </div>
                             }

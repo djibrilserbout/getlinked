@@ -40,27 +40,30 @@ const EducationCard = ({education, handleUpdate, isAdmin, isMine}) => {
     }
 
     return (
-        <Card style={{marginTop: '10px', marginBottom: '10px'}}>
-            <Card.Body>
-                {
-                    (isAdmin || isMine) &&
-                    <div className={"admin-buttons"}>
-                        <Button variant="warning" size={"sm"} onClick={handleShow}>Modifier</Button>
-                        <Button variant="danger" size={"sm"} onClick={deleteEducation}>Supprimer</Button>
-                    </div>
-                }
+        <div>
+            <div className={"my-5"}>
+                <div className={"flex justify-between"}>
+                    <div className={"text-xl font-bold"}>{education.name}</div>
+                    {
+                        (isAdmin || isMine) &&
+                        <div className={"space-x-2"}>
+                            <button className={"bg-gray-900 text-white text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium"} onClick={handleShow}>Modifier</button>
+                            <button className={"bg-gray-900 text-white text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium"} onClick={deleteEducation}>Supprimer</button>
+                        </div>
+
+                    }
+                </div>
                 <h4>{education.schoolName}</h4>
-                <Card.Title>{education.name}</Card.Title>
-                <Card.Text>{education.description}</Card.Text>
-            </Card.Body>
-            <Card.Footer className={"text-muted"}>
-                {education.dateBegin} - {education.dateFinish}
-            </Card.Footer>
+                <div className={"text-gray-600"}>
+                    {education.dateBegin} - {education.dateFinish}
+                </div>
+                <div>{education.description}</div>
+            </div>
             <ModifyEducationForm show={show}
                                  handleClose={handleClose}
                                  handleUpdate={handleUpdateCard}
                                  education={education}/>
-        </Card>
+        </div>
     )
 }
 
