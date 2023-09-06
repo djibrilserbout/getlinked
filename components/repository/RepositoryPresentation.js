@@ -1,7 +1,7 @@
 const RepositoryPresentation = ({name, description}) => {
     return (
-        <div className={"repository-presentation"}>
-            <h1>{name}</h1>
+        <div>
+            <h1 className={"text-5xl"}>{name}</h1>
             <p>{description}</p>
         </div>
     )

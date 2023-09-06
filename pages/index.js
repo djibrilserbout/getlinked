@@ -1,22 +1,21 @@
-import Head from 'next/head'
-import styles from '../styles/Home.module.css'
-
+import Steps from "../components/home/Steps"
+import Presentation from "../components/home/Presentation";
+import Hero from "../components/home/Hero";
+import Head from "next/head";
 
 export default function Home() {
-
     return (
-        <>
+        <div>
             <Head>
-                <title>getLinked</title>
+                <title>getLinked | Accueil</title>
             </Head>
-            <main className={styles.main}>
-                <h1 className={styles.title}>getLinked</h1>
-                <h2>Montrer votre potentiel !</h2>
-                {/* eslint-disable-next-line react/no-unescaped-entities */}
-                <p>Marre d'entendre les recruteur dire que vous n'avez pas d'expérience pour un stage, une alternance pour un premier job ?<br />
-                    Avec <b>getLinked</b>, créer des projets utile de A à Z et devenez attractif auprès des recruteurs !
-                </p>
-            </main>
-        </>
+            <div className="h-32 md:h-40"></div>
+            <Hero/>
+            <div className="h-32 md:h-40"></div>
+            <Steps/>
+            <div className="h-32 md:h-40"></div>
+            <Presentation/>
+            <div className="h-10 md:h-40"></div>
+        </div>
     )
 }

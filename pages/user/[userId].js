@@ -13,6 +13,7 @@ import authorization from "../../lib/authorization";
 import {Button} from "react-bootstrap";
 import ChatBox from "../../components/chat/ChatBox";
 import ChatForm from "../../components/chat/ChatForm";
+import Head from "next/head";
 
 const UserProfile = ({isSuperAdmin, isAdmin, isMine}) => {
     const router = useRouter()
@@ -118,8 +119,11 @@ const UserProfile = ({isSuperAdmin, isAdmin, isMine}) => {
     }
     return (
         <div style={{margin: '20px'}}>
+            <Head>
+                <title>getLinked | {user.name}</title>
+            </Head>
             {
-                isSuperAdmin &&
+                (isSuperAdmin && !isMine) &&
                 <div className={"admin-buttons"}>
                     <Button variant="danger" size={"sm"} onClick={grantPermissions}>Ajouter des permissions</Button>
                     <Button variant="danger" size={"sm"} onClick={revokePermissions}>Enlever des permissions</Button>

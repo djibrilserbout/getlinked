@@ -3,6 +3,7 @@ import {useEffect, useState} from "react";
 import StepGroup from "../../components/challenge/step/StepGroup";
 import {getSession} from "next-auth/react";
 import authorization from "../../lib/authorization";
+import Head from "next/head";
 
 const Challenges = ({isAdmin}) => {
     const [challenges, setChallenges] = useState([]);
@@ -41,6 +42,9 @@ const Challenges = ({isAdmin}) => {
 
     return (
         <div>
+            <Head>
+                <title>getLinked | Challenges</title>
+            </Head>
             <h1>Challenges disponibles : </h1>
             <div style={{display: "flex"}}>
                 <ChallengeGroup challenges={challenges}

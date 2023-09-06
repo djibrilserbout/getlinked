@@ -1,9 +1,7 @@
 import {useEffect, useState} from "react";
-import {useSession} from "next-auth/react";
-import Link from "next/link";
-import Image from "next/image";
-import {Button, Card, CardGroup, CardImg} from "react-bootstrap";
+
 import ProfileCard from "../../components/user/profile/ProfileCard";
+import Head from "next/head";
 
 const Index = () => {
     const [users, setUsers] = useState([])
@@ -25,13 +23,15 @@ const Index = () => {
     }, [])
     return (
         <>
-        <h1>Les développeurs</h1>
-        <div style={{display: 'flex'}}>
-            {users.map((user) => <ProfileCard key={user.id} user={user}/>)}
-        </div>
-</>
-)
-    ;
+            <Head>
+                <title>getLinked | Profils développeurs</title>
+            </Head>
+            <h1 className={"invisible"}>Liste des développeurs disponibles</h1>
+            <div className={"grid md:grid-cols-3 sm:grid-cols-1"}>
+                {users.map((user) => <ProfileCard key={user.id} user={user}/>)}
+            </div>
+        </>
+    );
 }
 
 export default Index

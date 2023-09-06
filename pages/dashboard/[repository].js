@@ -5,6 +5,7 @@ import {getSession, useSession} from "next-auth/react";
 import RepositoryDeployment from "../../components/repository/Deployment/RepositoryDeployment";
 import RepositoryPlaceholder from "../../components/placeholders/RepositoryPlaceholder";
 import RepositoryPresentation from "../../components/repository/RepositoryPresentation";
+import Head from "next/head";
 
 const prisma = new PrismaClient();
 
@@ -105,6 +106,9 @@ const Repository = (props) => {
             <>
                 {repoInfos && <RepositoryPresentation name={repoInfos.name} description={repoInfos.description} />}
                 <div>
+                    <Head>
+                        <title>getLinked | {repoInfos?.name}</title>
+                    </Head>
                     {repoInfos?.has_pages ? <div>Déployé</div> : <div>Non déployé</div>}
                     {deploymentInfos && <span>Disponible vers : {deploymentInfos.html_url} </span>}
                 </div>
