@@ -5,12 +5,17 @@ import ModifyProfileForm from "./ModifyProfileForm";
 import {getDatabase, onValue, push, ref, set, get} from "firebase/database";
 import {firebaseApp} from "../../../lib/config";
 import {useSession} from "next-auth/react";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 
 const DeveloperProfile = ({user, handleClose, handleShow, handleUpdate, isAdmin, isMine, show}) => {
     const {data: session} = useSession()
     const [room, setRoom] = useState("");
 
+    useEffect(() => {
+
+            loadRoom()
+
+    }, [])
     function loadRoom() {
         const db = getDatabase(firebaseApp)
         get(ref(db, `rooms/${session.user.name}-${user.name}`)).then((snapshot) => {
