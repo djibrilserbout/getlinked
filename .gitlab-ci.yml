@@ -2,13 +2,17 @@ stages:
   - build
   - deploy
 
+services:
+  - docker:dind
+
 variables:
+  DOCKER_HOST: tcp://docker:2375/
   DOCKER_DRIVER: overlay2
 
 build:
   stage: build
   script:
-    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+    - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin $CI_REGISTRY
     - docker build -t $CI_REGISTRY/$CI_PROJECT_PATH:$CI_COMMIT_SHA .
     - docker push $CI_REGISTRY/$CI_PROJECT_PATH:$CI_COMMIT_SHA
 
@@ -17,4 +21,4 @@ deploy:
   script:
     - ssh debian@146.59.229.143 "docker pull $CI_REGISTRY/$CI_PROJECT_PATH:$CI_COMMIT_SHA"
     - ssh debian@146.59.229.143 "docker stop getlinked-nextjs || true && docker rm getlinked-nextjs || true"
-    - ssh debian@146.59.229.143 "docker run -d --name getlinked-nextjs -p 3000:3000 $CI_REGISTRY/$CI_PROJECT_PATH:$CI_COMMIT_SHA"```
+    - ssh debian@146.59.229.143 "docker run -d --name getlinked-nextjs -p 3000:3000 $CI_REGISTRY/$CI_PROJECT_PATH:$CI_COMMIT_SHA"
