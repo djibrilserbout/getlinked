@@ -2,14 +2,10 @@ stages:
   - build
   - deploy
 
-services:
-  - docker:dind
-
-variables:
-  DOCKER_HOST: tcp://docker:2375/
-  DOCKER_DRIVER: overlay2
-
 build:
+  image: docker:19.03.12
+  services:
+    - docker:19.03.12-dind
   stage: build
   script:
     - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
@@ -18,7 +14,16 @@ build:
 
 deploy:
   stage: deploy
+  before_script:
+    - apk add openssh-client openssl
+    - eval $(ssh-agent -s)
+    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add - > /dev/null
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - ssh-keyscan 146.59.229.143 >> ~/.ssh/known_hosts
+    - chmod 644 ~/.ssh/known_hosts
   script:
     - ssh debian@146.59.229.143 "docker pull $CI_REGISTRY/$CI_PROJECT_PATH:$CI_COMMIT_SHA"
     - ssh debian@146.59.229.143 "docker stop getlinked-nextjs || true && docker rm getlinked-nextjs || true"
     - ssh debian@146.59.229.143 "docker run -d --name getlinked-nextjs -p 3000:3000 $CI_REGISTRY/$CI_PROJECT_PATH:$CI_COMMIT_SHA"
+  when: manual
