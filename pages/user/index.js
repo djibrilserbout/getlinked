@@ -30,6 +30,7 @@ const Index = () => {
             <div className={"grid md:grid-cols-3 sm:grid-cols-1"}>
                 {users.map((user) => <ProfileCard key={user.id} user={user}/>)}
             </div>
+            <div className="h-10 md:h-40"></div>
         </>
     );
 }

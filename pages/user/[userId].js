@@ -1,18 +1,13 @@
-import {getSession, useSession} from "next-auth/react";
+import {useSession} from "next-auth/react";
 import {useRouter} from "next/router";
 import {useEffect, useState} from "react";
-import {firebaseApp} from "../../lib/config";
-import {getDatabase, ref, set, push, get, child, serverTimestamp, onValue} from "firebase/database";
-
 
 import EducationGroup from "../../components/user/education/EducationGroup";
 import ExperienceGroup from "../../components/user/experience/ExperienceGroup";
-import ModifyProfileForm from "../../components/user/profile/ModifyProfileForm";
 import DeveloperProfile from "../../components/user/profile/DeveloperProfile";
 import authorization from "../../lib/authorization";
 import {Button} from "react-bootstrap";
-import ChatBox from "../../components/chat/ChatBox";
-import ChatForm from "../../components/chat/ChatForm";
+
 import Head from "next/head";
 
 const UserProfile = ({isSuperAdmin, isAdmin, isMine}) => {
@@ -22,11 +17,7 @@ const UserProfile = ({isSuperAdmin, isAdmin, isMine}) => {
     const [user, setUser] = useState([])
     const [show, setShow] = useState(false);
     const [isUpdated, setIsUpdated] = useState(false);
-    const person = {
-        isHuman: false,
 
-    };
-    const [messages, setMessages] = useState({OOO: {username: "none", msg: "jji", createdAt: "OOOO"}});
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
     const handleUpdate = () => {
@@ -72,17 +63,6 @@ const UserProfile = ({isSuperAdmin, isAdmin, isMine}) => {
         }
     }
 
-    const getMessages = async () => {
-        const db = getDatabase(firebaseApp)
-        return onValue(ref(db), (snapshot) => {
-            if (snapshot.val() == null) {
-                setMessages({})
-            }
-            console.log(snapshot.val())
-            setMessages(snapshot.val())
-
-        })
-    }
 
     const getUser = async () => {
         const url = `/api/users/${userId}`
@@ -104,12 +84,6 @@ const UserProfile = ({isSuperAdmin, isAdmin, isMine}) => {
         }
     }, [router.isReady, isUpdated])
 
-    useEffect(() => {
-        if (router.isReady) {
-            setMessages([])
-            getMessages()
-        }
-    }, [router.isReady, isUpdated])
 
     if (user.length === 0 ||
         !session) {
@@ -136,12 +110,11 @@ const UserProfile = ({isSuperAdmin, isAdmin, isMine}) => {
                         <EducationGroup userId={userId} isAdmin={isAdmin} isMine={isMine}/>
                     </div>
                 </div>
-                <ChatBox messages={messages}/>
 
             </div>
             <div>
-
             </div>
+            <div className="h-10 md:h-40"></div>
         </div>
     )
 }

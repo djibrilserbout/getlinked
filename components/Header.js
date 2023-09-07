@@ -15,7 +15,7 @@ function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
 }
 
-export default function Example() {
+export default function Header() {
     const {data: session, status} = useSession();
     return (
         <Disclosure as="nav" className="bg-gradient-to-tr from-gray-900 to-black pt-3">
@@ -89,17 +89,7 @@ export default function Example() {
                                                         className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-lg text-grey-900 font-bold')}
                                                     >
                                                         {session.user.name}
-                                                        <button className={'mt-2 bg-transparent border border-black text-black hover:bg-gray-700 hover:text-white rounded-full px-3 py-2 text-sm font-medium'}> Voir le profil</button>
-                                                    </a>
-                                                )}
-                                            </Menu.Item>
-                                            <Menu.Item>
-                                                {({ active }) => (
-                                                    <a
-                                                        href="#"
-                                                        className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
-                                                    >
-                                                        Mes messages
+                                                        <button className={'mt-2 bg-transparent border border-black text-black hover:bg-gray-700 hover:text-white rounded-full px-3 py-2 text-sm font-medium'}> Voir mon profil</button>
                                                     </a>
                                                 )}
                                             </Menu.Item>
