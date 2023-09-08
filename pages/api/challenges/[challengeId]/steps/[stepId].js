@@ -4,6 +4,7 @@ import {getSession} from "next-auth/react";
 
 export default async function handler(req, res) {
     const session = await getSession({req})
+    // Affiche une étape en particulier
     if (req.method === "GET") {
         const step = await prisma.step.findUnique({
             where: {
@@ -15,6 +16,7 @@ export default async function handler(req, res) {
         if(!step)
             return res.status(404).json({message: "Not found"});
     }
+    // Supprime une étape en particulier
     if (req.method === "DELETE") {
         if(session?.role !== 'admin' && session?.role !== 'superadmin')
             return res.status(401).json({message: "Unauthorized"})
@@ -30,6 +32,7 @@ export default async function handler(req, res) {
             return res.status(404).json({message: e.message})
         }
     }
+    // Modifie une étape en particulier
     if (req.method === "PUT") {
         if(session?.role !== 'admin' && session?.role !== 'superadmin')
             return res.status(401).json({message: "Unauthorized"})
@@ -43,8 +46,10 @@ export default async function handler(req, res) {
             }
         });
         if (step)
+            //Etape modifiée
             return res.status(200).json({message: "Successfully updated", step});
         else
+            //Etape non trouvée
             return res.status(404).json({message: "Not found"});
 
     }

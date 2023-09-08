@@ -3,6 +3,7 @@ import {getSession} from "next-auth/react";
 
 export default async function handler(req, res) {
     const session = await getSession({req})
+    //Affiche les formations
     if (req.method === "GET") {
         const session = await getSession({req})
         console.log(session);
@@ -17,6 +18,7 @@ export default async function handler(req, res) {
             res.status(404).json({message: "Not found"});
 
     }
+    // Ajoute une formation
     if (req.method === "POST") {
         if (session?.role !== 'admin' && session?.role !== 'superadmin' && session?.user.id !== req.query.userId)
             return res.status(401).json({message: "Unauthorized"})
@@ -38,6 +40,7 @@ export default async function handler(req, res) {
                 res.status(404).json({message: "Error"})
 
         } catch (e) {
+            // Erreur sur la requête
             res.status(404).json(e.message)
         }
 

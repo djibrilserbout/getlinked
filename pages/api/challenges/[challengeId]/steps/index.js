@@ -4,6 +4,7 @@ import {getSession} from "next-auth/react";
 
 export default async function handler(req, res) {
     const session = await getSession({req})
+    // Liste les étapes d'un challenenge en particulier
     if (req.method === "GET") {
         const steps = await prisma.step.findMany({
             where: {
@@ -15,6 +16,7 @@ export default async function handler(req, res) {
         if(!steps)
             return res.status(404).json({message: "Not found"});
     }
+    // Ajoute une étape à un challenge
     if (req.method === "POST") {
         if(session?.role !== 'admin' && session?.role !== 'superadmin')
             return res.status(401).json({message: "Unauthorized"})
@@ -33,6 +35,7 @@ export default async function handler(req, res) {
                 return res.status(404).json({message: "Error"})
 
         } catch (e) {
+            // Erreur dans la requête
             return res.status(404).json({message: e.message})
         }
 

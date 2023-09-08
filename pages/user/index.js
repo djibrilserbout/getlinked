@@ -24,7 +24,7 @@ const Index = () => {
     return (
         <>
             <Head>
-                <title>getLinked | Profils développeurs</title>
+                <title>getLinked | Profils</title>
             </Head>
             <h1 className={"invisible"}>Liste des développeurs disponibles</h1>
             <div className={"grid md:grid-cols-3 sm:grid-cols-1"}>

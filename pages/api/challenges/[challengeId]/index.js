@@ -3,6 +3,7 @@ import {getSession} from "next-auth/react";
 
 export default async function handler(req, res) {
     const session = await getSession({req})
+    // Affiche un challenge en particulier
     if (req.method === "GET") {
         const challenge = await prisma.challenge.findUnique({
             where: {
@@ -14,6 +15,7 @@ export default async function handler(req, res) {
         if (!challenge)
             return res.status(404).json({message: "Not found"});
     }
+    // Supprime un challenge en particulier
     if (req.method === "DELETE") {
         if(session?.role !== 'admin' && session?.role !== 'superadmin')
             return res.status(401).json({message: "Unauthorized"})
@@ -31,6 +33,7 @@ export default async function handler(req, res) {
             return res.status(404).json({message: e.message})
         }
     }
+    //Modifie un challenge en particulier
     if (req.method === "PUT") {
         if(session?.role !== 'admin' && session?.role !== 'superadmin')
             return res.status(401).json({message: "Unauthorized"})
@@ -49,6 +52,7 @@ export default async function handler(req, res) {
 
     }
     else {
+        // Methode non implementée
         return res.status(501).json({message: "Not implemented"})
     }
 }
