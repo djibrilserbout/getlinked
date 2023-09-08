@@ -47,7 +47,7 @@ const Repository = (props) => {
 
 
     const getDeploymentInfos = async (repoName) => {
-        if (repoInfos?.has_pages) {
+        if (repoInfos?.has_pages && !deploymentInfos) {
             const url = `https://api.github.com/repos/${session.user.name}/${repoName}/pages`
             const parameters = {
                 method: 'GET', headers: {authorization: `token ${props.token}`},
@@ -97,7 +97,7 @@ const Repository = (props) => {
     }
     useEffect(() => {
         status === "authenticated" && getRepoInfos();
-    }, [status, repoInfos])
+    }, [status, repoInfos, deploymentInfos])
 
     if (status === "loading")
         return <RepositoryPlaceholder/>
@@ -113,13 +113,20 @@ const Repository = (props) => {
                             <RepositoryPresentation name={repoInfos.name} description={repoInfos.description}/>}
                         {repoInfos?.has_pages ? <div className={"font-bold text-green-400"}>Déployé sur internet</div> :
                             <div>Non déployé</div>}
+                        <a className={"text-white underline hover:no-underline"}
+                           href={repoInfos?.html_url}
+                           target="_blank"
+                           rel="noreferrer">Voir le projet sur GitHub</a>
                     </div>
                     {deploymentInfos &&
-                        <a className={"bg-white rounded-lg font-bold text-black p-5 border-solid border-2 hover:border-white hover:bg-transparent hover:text-white "}
-                           href={deploymentInfos.html_url}>Visiter le site</a>}
+                           <a className={"bg-white rounded-lg font-bold text-black p-5 border-solid border-2 hover:border-white hover:bg-transparent hover:text-white "}
+                           href={deploymentInfos.html_url}
+                           target="_blank"
+                           rel="noreferrer">Visiter le site</a>
+                       }
                 </div>
                 <div className={" bg-black p-10"}>
-                    <div>Branche choisie  :
+                    <div>Branche choisie :
                         <select className={"ml-4 text-black"} value={selectedBranch}
                                 onChange={(event) => setSelectedBranch(event.target.value)}>
                             <option value="">--Choissisez une branche---</option>

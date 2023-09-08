@@ -1,11 +1,21 @@
 const ResponseMessage = ({message}) => {
+    if (message[0] >= 400) {
+        return (
+            <div
+                className={"alert alert-dismissible fade show text-red-500 "}
+                role="alert">
+                KO
+            </div>
+        )
+    }
     return (
         <div
-            className={"alert alert-dismissible fade show" + (message[0] >= 400 ? " alert-danger " : " alert-success")}
+            className={"alert alert-dismissible fade show text-green-500 "}
             role="alert">
-            {message[0]} - {message[1]}
+            OK
         </div>
     )
+
 }
 
 export default ResponseMessage
