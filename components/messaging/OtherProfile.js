@@ -5,7 +5,7 @@ export default function OtherProfile({room}) {
     const {data: session, status} = useSession();
 
 
-    if (session) {
+    if (session && room) {
         const otherPerson = room.split("-").find((x) => x !== session.user.name)
         return (
 

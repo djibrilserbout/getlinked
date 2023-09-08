@@ -32,7 +32,7 @@ export function Messaging() {
     }, [router.isReady])
     return (
         <div className="flex h-screen antialiased text-gray-800 mb-40">
-            <div className="flex flex-row h-full w-full overflow-x-hidden">
+            <div className="flex flex-row h-full w-full overflow-x-hidden flex-wrap">
                 <ChatSideBar room={room}/>
                 <ChatMain room={room} messages={messages}/>
             </div>
