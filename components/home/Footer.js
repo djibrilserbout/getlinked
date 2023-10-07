@@ -9,11 +9,11 @@ export default function Footer(){
             <ul className="space-y-1 text-gray-400">
                 <li className="pb-4 font-serif text-gray-400">Nos liens</li>
                 <li>
-                    <a href="mailto:contact@getlinked.dev" className="hover:underline">Adresse e-mail</a>
+                    <a href="mailto:contact@getlinked.dev" className="hover:underline">Adresse e-mail de l'équipe</a>
                 </li>
                 <li>
                     <a href="https://www.linkedin.com/company/getlinked-dev/about/?viewAsMember=true"
-                       className="hover:underline">Linkedin</a>
+                       className="hover:underline">Linkedin de l'équipe</a>
                 </li>
                 <li>
                     <a href="https://etna.io" className="hover:underline">Site de l&apos;ETNA</a>
@@ -21,6 +21,9 @@ export default function Footer(){
             </ul>
             <ul className="space-y-1 text-gray-400">
                 <li className="pb-4 font-serif text-gray-400">Accès</li>
+                <li>
+                    <a href="mailto:djibril.serbout@gmail.com" className="hover:underline">djibril.serbout@gmail.com</a>
+                </li>
                 <li>
                     <a href="https://goo.gl/maps/DWqChHouH851YBS27" className="hover:underline">7, rue Maurice
                         Grandcoing,

@@ -1,13 +1,17 @@
 import Link from "next/link";
+import Image from "next/image";
 
 const ProfileCard = ({user}) => {
     return (
         <div className="container mx-auto my-20">
             <div className="bg-white relative shadow rounded-lg w-5/6 md:w-5/6  lg:w-4/6 xl:w-4/6 mx-auto text-black p-4">
                 <div className={"flex justify-center"}>
-                    <img
-                        className="rounded-full mx-auto absolute -top-20 w-32 h-32 shadow-md border-4 border-white transition duration-200 "
+                    <div className={"rounded-full mx-auto absolute -top-20 w-32 h-32 shadow-md border-4 border-white transition duration-200 "}>
+                    <Image
+                        className={"rounded-full"}
+                        layout={"fill"}
                         src={user.image} alt="Sunset in the mountains"/>
+                </div>
                 </div>
                 <div className="px-6 pt-12">
                     <div className="font-bold text-xl mb-2">{user.name}</div>

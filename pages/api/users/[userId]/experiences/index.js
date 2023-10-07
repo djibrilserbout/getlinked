@@ -12,15 +12,17 @@ export default async function handler(req, res) {
             },
         });
         if(experiences)
-            res.status(200).json(experiences);
+            return res.status(200).json(experiences);
         if(!experiences)
             // Erreur sur la requête
-            res.status(404).json({message: "Not found"});
+           return  res.status(404).json({message: "Not found"});
     }
     // Ajoute une expérience à un utilisateur
     if (req.method === "POST") {
-        if(session?.role !== 'admin' && session?.role !== 'superadmin' && session?.user.id !== req.query.userId)
+        if(session?.role !== 'admin' && session?.role !== 'superadmin' && session?.user.id !== req.query.userId) {
+            console.log(["session-user-id", session?.user.id])
             return res.status(401).json({message: "Unauthorized"})
+        }
         try {
             const experience = await prisma.experience.create({
                 data: {
@@ -35,15 +37,15 @@ export default async function handler(req, res) {
             console.log(experience)
             if(experience)
                 // Nouvelle expérience crée
-                res.status(201).json({message: "Created Successfully!", experience})
+                return res.status(201).json({message: "Created Successfully!", experience})
             else
                 // Erreur dans la requête
-                res.status(404).json({message: "Error"})
+               return res.status(404).json({message: "Error"})
 
         }
         catch(e) {
             //Erreur lancée avec throw
-            res.status(404).json(e.message)
+            return res.status(404).json(e.message)
         }
 
     }
