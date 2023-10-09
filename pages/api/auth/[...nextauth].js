@@ -1,5 +1,6 @@
 import NextAuth from "next-auth"
 import GithubProvider from "next-auth/providers/github"
+import LinkedInProvider from "next-auth/providers/linkedin"
 import {PrismaAdapter} from "@next-auth/prisma-adapter"
 import {PrismaClient} from "@prisma/client"
 import {getToken} from "next-auth/jwt";
@@ -18,6 +19,10 @@ export const authOptions = {
                 }
             },
         }),
+        LinkedInProvider({
+            clientId: process.env.LINKEDIN_CLIENT_ID,
+            clientSecret: process.env.LINKEDIN_CLIENT_SECRET
+        })
     ],
     secret: process.env.NEXTAUTH_SECRET,
     session: {

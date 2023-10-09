@@ -9,6 +9,7 @@ import authorization from "../../lib/authorization";
 import {Button} from "react-bootstrap";
 
 import Head from "next/head";
+import ProjectGroup from "../../components/user/project/ProjectGroup";
 
 const UserProfile = ({isSuperAdmin, isAdmin, isMine}) => {
     const router = useRouter()
@@ -108,6 +109,7 @@ const UserProfile = ({isSuperAdmin, isAdmin, isMine}) => {
                     <div className="bg-white relative shadow rounded-lg text-black p-4">
                         <ExperienceGroup userId={userId} isAdmin={isAdmin} isMine={isMine}/>
                         <EducationGroup userId={userId} isAdmin={isAdmin} isMine={isMine}/>
+                        <ProjectGroup userId={userId} isAdmin={isAdmin} isMine={isMine}/>
                     </div>
                 </div>
 

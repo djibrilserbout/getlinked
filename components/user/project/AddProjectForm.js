@@ -2,28 +2,31 @@ import {Button, Form, Modal} from "react-bootstrap";
 import {Fragment} from "react";
 import {Dialog, Transition} from "@headlessui/react";
 
-const ModifyProfileForm = ({show, handleClose, handleUpdate, info}) => {
+const AddProjectForm = ({show, handleClose, userId, handleUpdate}) => {
     async function handleSubmit(e) {
         e.preventDefault()
 
         const parameters = {
-            method: "PUT",
+            method: "POST",
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                jobTitle: e.target.formBasicJobTitle.value,
+                name: e.target.formBasicTitle.value,
+                challengeName: e.target.formBasicChallenge.value,
+                link: e.target.formBasicLink.value,
                 description: e.target.formBasicDescription.value,
+                dateBegin: e.target.formBasicDateBegin.value ? new Date(e.target.formBasicDateBegin.value).toISOString() : null ,
+                dateFinish: e.target.formBasicDateFinish.value ? new Date(e.target.formBasicDateFinish.value).toISOString() : null,
             })
         }
-        const response = await fetch(`/api/users/${info.id}`, parameters)
+        const response = await fetch(`/api/users/${userId}/projects`, parameters)
 
         if(response.ok) {
             console.log(await response.json())
         }
     }
-
     return (
         <Transition appear show={show} as={Fragment}>
             <Dialog as="div" className="relative z-10" onClose={handleClose}>
@@ -56,45 +59,62 @@ const ModifyProfileForm = ({show, handleClose, handleUpdate, info}) => {
                                     as="h3"
                                     className="text-lg font-medium leading-6 text-gray-900"
                                 >
-                                    Modifier votre profil
+                                    Ajouter un projet
                                 </Dialog.Title>
                                 <form onSubmit={handleSubmit}>
                                     <div className="mb-4">
                                         <label className="block text-gray-700 text-sm font-bold mb-2"
-                                               htmlFor="formBasicName">
-                                            Nom
+                                               htmlFor="formBasicChallenge">
+                                            Nom du challenge
                                         </label>
                                         <input
                                             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                            disabled={true} name="formBasicName" defaultValue={info.name} id="name" type="text"/>
+                                            name="formBasicChallenge" id="challengename" type="text" placeholder="ex: Créer une calculatrice de A à Z"/>
                                     </div>
                                     <div className="mb-4">
                                         <label className="block text-gray-700 text-sm font-bold mb-2"
-                                               htmlFor="formBasicEmail">
-                                            E-mail
+                                               htmlFor="formBasicTitle">
+                                            Nom du projet
                                         </label>
                                         <input
                                             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                            disabled={true} name="formBasicEmail" defaultValue={info.email} id="email" type="text"/>
+                                            name="formBasicTitle" id="projectname" type="text" placeholder="ex: Calculeo"/>
                                     </div>
                                     <div className="mb-4">
                                         <label className="block text-gray-700 text-sm font-bold mb-2"
-                                               htmlFor="formBasicJobTitle">
-                                            Intitulé du poste voulu
+                                               htmlFor="formBasicLink">
+                                            Lien du projet
                                         </label>
                                         <input
                                             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                            name="formBasicJobTitle" defaultValue={info.jobTitle} id="jobtitle" type="text" />
+                                            name="formBasicLink" id="projectlink" type="text" placeholder="ex: https://getlinked.dev"/>
                                     </div>
-
+                                    <div className="mb-4">
+                                        <label className="block text-gray-700 text-sm font-bold mb-2"
+                                               htmlFor="formBasicDateBegin">
+                                            Date de début
+                                        </label>
+                                        <input
+                                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                            name="formBasicDateBegin" id="datebeginchallenge" type="date" />
+                                    </div>
+                                    <div className="mb-4">
+                                        <label className="block text-gray-700 text-sm font-bold mb-2"
+                                               htmlFor="formBasicDateFinish">
+                                            Date de fin
+                                        </label>
+                                        <input
+                                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                            name="formBasicDateFinish" id="datefinishchallenge" type="date" />
+                                    </div>
                                     <div className="mb-4">
                                         <label className="block text-gray-700 text-sm font-bold mb-2"
                                                htmlFor="formBasicDescription">
-                                            Description de votre experience de la formation
+                                            Description de votre projet
                                         </label>
                                         <textarea
                                             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                            name="formBasicDescription" defaultValue={info.description} id="description"  placeholder="ex: Passionné par la technologie React..."/>
+                                            name="formBasicDescription" id="description"  placeholder="ex: J'ai pu apprendre de nouvelles choses sur..."/>
                                     </div>
                                     <div className="mt-4">
                                         <button
@@ -112,7 +132,7 @@ const ModifyProfileForm = ({show, handleClose, handleUpdate, info}) => {
                 </div>
             </Dialog>
         </Transition>
-    );
+    )
 }
 
-export default ModifyProfileForm
+export default AddProjectForm

@@ -46,6 +46,7 @@ model User {
   jobTitle      String?
   experiences   Experience[]
   educations    Education[]
+  projects      Project[]
 }
 
 model VerificationToken {
@@ -73,6 +74,18 @@ model Education {
     dateBegin DateTime?
     dateFinish DateTime?
     schoolName String?
+    description String?
+    userId  String
+    user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Project {
+    id  String    @id @default(cuid())
+    name String
+    dateBegin DateTime?
+    dateFinish DateTime?
+    challengeName String?
+    link String?
     description String?
     userId  String
     user User @relation(fields: [userId], references: [id], onDelete: Cascade)

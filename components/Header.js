@@ -115,8 +115,16 @@ export default function Header() {
                                                 )}
                                                 onClick={() => signIn('github')}
                                             >
-                                                Se connecter
+                                                Je suis développeur
                                             </button>
+                                        <button
+                                            className={classNames('hover:bg-transparent hover:text-gray-300 bg-gray-700 text-white',
+                                                'rounded-md px-3 py-2 text-sm font-medium'
+                                            )}
+                                            onClick={() => signIn('linkedin')}
+                                        >
+                                            Je suis recruteur
+                                        </button>
                                     </div>
                                 </div>
                             }
@@ -139,6 +147,26 @@ export default function Header() {
                                     {item.name}
                                 </Disclosure.Button>
                             ))}
+                            {!session  && <div className="sm:ml-6 sm:block">
+                                <div className="flex space-x-4">
+                                    <button
+                                        className={classNames('hover:bg-transparent hover:text-gray-300 bg-gray-700 text-white',
+                                            'rounded-md px-3 py-2 text-sm font-medium'
+                                        )}
+                                        onClick={() => signIn('github')}
+                                    >
+                                        Je suis développeur
+                                    </button>
+                                    <button
+                                        className={classNames('hover:bg-transparent hover:text-gray-300 bg-gray-700 text-white',
+                                            'rounded-md px-3 py-2 text-sm font-medium'
+                                        )}
+                                        onClick={() => signIn('linkedin')}
+                                    >
+                                        Je suis recruteur
+                                    </button>
+                                </div>
+                            </div>}
                         </div>
                     </Disclosure.Panel>
                 </>
