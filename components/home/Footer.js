@@ -9,11 +9,11 @@ export default function Footer(){
             <ul className="space-y-1 text-gray-400">
                 <li className="pb-4 font-serif text-gray-400">Nos liens</li>
                 <li>
-                    <a href="mailto:contact@getlinked.dev" className="hover:underline">Adresse e-mail de l'équipe</a>
+                    <a href="mailto:contact@getlinked.dev" className="hover:underline">Adresse e-mail de l&apos;équipe</a>
                 </li>
                 <li>
                     <a href="https://www.linkedin.com/company/getlinked-dev/about/?viewAsMember=true"
-                       className="hover:underline">Linkedin de l'équipe</a>
+                       className="hover:underline">Linkedin de l&apos;équipe</a>
                 </li>
                 <li>
                     <a href="https://etna.io" className="hover:underline">Site de l&apos;ETNA</a>
