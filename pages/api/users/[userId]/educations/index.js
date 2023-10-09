@@ -5,21 +5,21 @@ export default async function handler(req, res) {
     const session = await getSession({req})
     //Affiche les formations
     if (req.method === "GET") {
-        const session = await getSession({req})
-        console.log(session);
         const educations = await prisma.education.findMany({
             where: {
                 userId: req.query.userId,
             },
         });
         if (educations)
-            res.status(200).json(educations);
+            return res.status(200).json(educations);
         if (!educations)
-            res.status(404).json({message: "Not found"});
+            return res.status(404).json({message: "Not found"});
 
     }
     // Ajoute une formation
     if (req.method === "POST") {
+        console.log("this")
+        console.log(session);
         if (session?.role !== 'admin' && session?.role !== 'superadmin' && session?.user.id !== req.query.userId)
             return res.status(401).json({message: "Unauthorized"})
         try {
@@ -35,13 +35,13 @@ export default async function handler(req, res) {
             })
             console.log(education)
             if (education)
-                res.status(201).json({message: "Created Successfully!", education})
+                return res.status(201).json({message: "Created Successfully!", education})
             else
-                res.status(404).json({message: "Error"})
+                return res.status(404).json({message: "Error"})
 
         } catch (e) {
             // Erreur sur la requête
-            res.status(404).json(e.message)
+            return res.status(404).json(e.message)
         }
 
     }
