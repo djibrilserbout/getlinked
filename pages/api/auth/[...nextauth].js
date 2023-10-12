@@ -30,8 +30,13 @@ export const authOptions = {
     },
     callbacks: {
         async signIn({ user, account, profile, email, credentials }) {
-            console.log({user, account, profile, email, credentials});
-            if(user.type !== "recruiter" && account.provider === "linkedin") {
+            //console.log({user, account, profile, email, credentials});
+            const newUser = await prisma.user.findUnique({
+                where: {
+                    id: user.id,
+                },
+            })
+            if(newUser && user.type !== "recruiter" && account.provider === "linkedin") {
                 await prisma.user.update({
                     where: {
                         id: user.id,
@@ -41,7 +46,7 @@ export const authOptions = {
                     }
                 })
             }
-            if(user.type !== "developer" && account.provider === "github") {
+            if(newUser && user?.type !== "developer" && account.provider === "github") {
                  await prisma.user.update({
                     where: {
                         id: user.id,
@@ -51,7 +56,7 @@ export const authOptions = {
                     }
                 })
             }
-            if(user.email === "djibril.serbout@gmail.com" && user.role !== "superadmin") {
+            if(newUser && user?.email === "djibril.serbout@gmail.com" && user.role !== "superadmin") {
                 await prisma.user.update({
                     where: {
                         id: user.id,
