@@ -21,6 +21,7 @@ const ModifyProfileForm = ({show, handleClose, handleUpdate, info}) => {
 
         if(response.ok) {
             console.log(await response.json())
+            handleUpdate();
         }
     }
 

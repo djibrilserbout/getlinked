@@ -5,7 +5,6 @@ import {Dialog, Transition} from "@headlessui/react";
 const AddExperienceForm = ({show, handleClose, userId, handleUpdate}) => {
     async function handleSubmit(e) {
         e.preventDefault()
-
         const parameters = {
             method: "POST",
             headers: {
@@ -24,6 +23,7 @@ const AddExperienceForm = ({show, handleClose, userId, handleUpdate}) => {
 
         if(response.ok) {
             console.log(await response.json())
+            handleUpdate();
         }
     }
     return (

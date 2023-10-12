@@ -24,6 +24,7 @@ const ModifyEducationForm = ({show, handleClose, handleUpdate, education}) => {
 
         if(response.ok) {
             console.log(await response.json())
+            handleUpdate();
         }
     }
     return (

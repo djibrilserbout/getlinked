@@ -16,6 +16,8 @@ function classNames(...classes) {
 }
 
 export default function Header() {
+    const basicPicture = "https://fastly.picsum.photos/id/866/200/300.jpg?hmac=rcadCENKh4rD6MAp6V_ma-AyWv641M4iiOpe1RyFHeI";
+
     const {data: session, status} = useSession();
     return (
         <Disclosure as="nav" className="bg-gradient-to-tr from-gray-900 to-black pt-3">
@@ -66,7 +68,7 @@ export default function Header() {
                                             <span className="absolute -inset-1.5" />
                                             <span className="sr-only">Ouvrir menu utilisateur</span>
                                             <Image  className={"h-8 w-8 rounded-full"}
-                                                    src={session.user.image}
+                                                    src={session.user.image ?? basicPicture}
                                                     width="35"
                                                     height="35"
                                                     alt="User profile picture"/>

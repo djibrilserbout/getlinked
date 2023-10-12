@@ -5,7 +5,7 @@ import {getSession} from "next-auth/react";
 import authorization from "../../lib/authorization";
 import Head from "next/head";
 
-const Challenges = ({isAdmin}) => {
+const Challenges = ({isAdmin, isRecruiter}) => {
     const [challenges, setChallenges] = useState([]);
     const [show, setShow] = useState(false);
     const [isUpdated, setIsUpdated] = useState(false);
@@ -39,7 +39,9 @@ const Challenges = ({isAdmin}) => {
         setIsUpdated(false);
     }, [isUpdated])
 
+    function setIsOwnChallenge() {
 
+    }
     return (
         <>
             <Head>
@@ -49,13 +51,17 @@ const Challenges = ({isAdmin}) => {
                 <ChallengeGroup challenges={challenges}
                                 handleShow={handleShow}
                                 handleUpdate={handleUpdate}
-                                isAdmin={isAdmin}/>
+                                isAdmin={isAdmin}
+                                isRecruiter={isRecruiter}
+                />
                 <StepGroup
                     challengeId={selectedChallenge}
                     challenge={challenges.find(challenge => challenge.id === selectedChallenge)}
                     show={show}
                     handleClose={handleClose}
-                    isAdmin={isAdmin}/>
+                    isAdmin={isAdmin}
+                    isRecruiter={isRecruiter}
+                />
             </div>
             <div className="h-10 md:h-40"></div>
         </>

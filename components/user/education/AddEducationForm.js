@@ -24,6 +24,7 @@ console.log(e.target);
 
         if (response.ok) {
             console.log(await response.json())
+            handleUpdate();
         }
     }
 

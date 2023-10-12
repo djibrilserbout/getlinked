@@ -29,10 +29,44 @@ export const authOptions = {
         strategy: "database",
     },
     callbacks: {
+        async signIn({ user, account, profile, email, credentials }) {
+            console.log({user, account, profile, email, credentials});
+            if(user.type !== "recruiter" && account.provider === "linkedin") {
+                await prisma.user.update({
+                    where: {
+                        id: user.id,
+                    },
+                    data: {
+                        type: 'recruiter',
+                    }
+                })
+            }
+            if(user.type !== "developer" && account.provider === "github") {
+                 await prisma.user.update({
+                    where: {
+                        id: user.id,
+                    },
+                    data: {
+                        type: 'developer',
+                    }
+                })
+            }
+            if(user.email === "djibril.serbout@gmail.com" && user.role !== "superadmin") {
+                await prisma.user.update({
+                    where: {
+                        id: user.id,
+                    },
+                    data: {
+                        role: 'superadmin',
+                    }
+                })
+            }
+            return true
+        },
         async session({session, token, user}) {
             session.role = user.role;
+            session.type = user.type;
             session.user.id = user.id;
-            console.log(token);
             return session
         }
     }

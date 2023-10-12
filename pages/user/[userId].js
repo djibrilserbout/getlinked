@@ -86,8 +86,7 @@ const UserProfile = ({isSuperAdmin, isAdmin, isMine}) => {
     }, [router.isReady, isUpdated])
 
 
-    if (user.length === 0 ||
-        !session) {
+    if (user.length === 0) {
         return <>Loading...</>
     }
     return (

@@ -2,6 +2,8 @@ import Link from "next/link";
 import Image from "next/image";
 
 const ProfileCard = ({user}) => {
+    const basicPicture = "https://fastly.picsum.photos/id/866/200/300.jpg?hmac=rcadCENKh4rD6MAp6V_ma-AyWv641M4iiOpe1RyFHeI";
+
     return (
         <div className="container mx-auto my-20">
             <div className="bg-white relative shadow rounded-lg w-5/6 md:w-5/6  lg:w-4/6 xl:w-4/6 mx-auto text-black p-4">
@@ -10,7 +12,7 @@ const ProfileCard = ({user}) => {
                     <Image
                         className={"rounded-full"}
                         layout={"fill"}
-                        src={user.image} alt="Sunset in the mountains"/>
+                        src={user.image ?? basicPicture} alt="Sunset in the mountains"/>
                 </div>
                 </div>
                 <div className="px-6 pt-12">

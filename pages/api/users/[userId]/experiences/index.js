@@ -1,9 +1,11 @@
 import prisma from '../../../../../lib/prisma';
 import {getSession} from "next-auth/react";
+import {getServerSession} from "next-auth";
+import {authOptions} from "../../../auth/[...nextauth]";
 
 
 export default async function handler(req, res) {
-    const session = await getSession({req})
+    const session = await getServerSession(req, res, authOptions)
     // Liste les expérience d'un utilisateur
     if (req.method === "GET") {
         const experiences = await prisma.experience.findMany({
@@ -11,15 +13,16 @@ export default async function handler(req, res) {
                 userId: req.query.userId,
             },
         });
-        if(experiences)
+        if (experiences)
             return res.status(200).json(experiences);
-        if(!experiences)
+        if (!experiences)
             // Erreur sur la requête
-           return  res.status(404).json({message: "Not found"});
+            return res.status(404).json({message: "Not found"});
     }
+    if(session) {
     // Ajoute une expérience à un utilisateur
     if (req.method === "POST") {
-        if(session?.role !== 'admin' && session?.role !== 'superadmin' && session?.user.id !== req.query.userId) {
+        if (session?.role !== 'admin' && session?.role !== 'superadmin' && session?.user.id !== req.query.userId) {
             console.log(["session-user-id", session?.user.id])
             return res.status(401).json({message: "Unauthorized"})
         }
@@ -35,19 +38,21 @@ export default async function handler(req, res) {
                 }
             })
             console.log(experience)
-            if(experience)
+            if (experience)
                 // Nouvelle expérience crée
                 return res.status(201).json({message: "Created Successfully!", experience})
             else
                 // Erreur dans la requête
-               return res.status(404).json({message: "Error"})
+                return res.status(404).json({message: "Error"})
 
-        }
-        catch(e) {
+        } catch (e) {
             //Erreur lancée avec throw
             return res.status(404).json(e.message)
         }
 
     }
+}else {
+    return res.status(404).json({message: "Error"})
+}
 
 }

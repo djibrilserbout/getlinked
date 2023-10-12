@@ -24,6 +24,7 @@ const ModifyExperienceForm = ({show, handleClose, handleUpdate, experience}) => 
 
         if(response.ok) {
             console.log(await response.json())
+            handleUpdate();
         }
     }
     return (

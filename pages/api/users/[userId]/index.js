@@ -1,8 +1,10 @@
 import prisma from '../../../../lib/prisma';
 import {getSession} from "next-auth/react";
+import {getServerSession} from "next-auth";
+import {authOptions} from "../../auth/[...nextauth]";
 
 export default async function handler(req, res) {
-    const session = await getSession({req})
+    const session = await getServerSession(req, res, authOptions)
     // Afficher un utilisateur
     if (req.method === "GET") {
         const user = await prisma.user.findUnique({

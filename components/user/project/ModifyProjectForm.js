@@ -1,8 +1,10 @@
 import {Button, Form, Modal} from "react-bootstrap";
-import {Fragment} from "react";
+import {Fragment, useEffect, useState} from "react";
 import {Dialog, Transition} from "@headlessui/react";
 
 const ModifyProjectForm = ({show, handleClose, handleUpdate, project}) => {
+    const [challenges, setChallenges] = useState([]);
+    const [isUpdated, setIsUpdated] = useState(false);
     async function handleSubmit(e) {
         e.preventDefault()
 
@@ -17,16 +19,36 @@ const ModifyProjectForm = ({show, handleClose, handleUpdate, project}) => {
                 challengeName: e.target.formBasicChallenge.value,
                 link: e.target.formBasicLink.value,
                 description: e.target.formBasicDescription.value,
-                dateBegin: e.target.formBasicDateBegin.value ? new Date(e.target.formBasicDateBegin.value).toISOString() : null ,
+                dateBegin: e.target.formBasicDateBegin.value ? new Date(e.target.formBasicDateBegin.value).toISOString() : null,
                 dateFinish: e.target.formBasicDateFinish.value ? new Date(e.target.formBasicDateFinish.value).toISOString() : null,
             })
         }
         const response = await fetch(`/api/users/${project.userId}/projects/${project.id}`, parameters)
 
-        if(response.ok) {
+        if (response.ok) {
             console.log(await response.json())
+            handleUpdate();
         }
     }
+    const getChallenges = async () => {
+        const parameters = {
+            method: "GET",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+        }
+        const response = await fetch("/api/challenges/", parameters);
+        if(response.ok) {
+            const json = await response.json()
+            setChallenges(json);
+        }
+    }
+
+    useEffect( () => {
+        getChallenges();
+    }, [isUpdated]);
+
     return (
         <Transition appear show={show} as={Fragment}>
             <Dialog as="div" className="relative z-10" onClose={handleClose}>
@@ -67,9 +89,12 @@ const ModifyProjectForm = ({show, handleClose, handleUpdate, project}) => {
                                                htmlFor="formBasicChallenge">
                                             Nom du challenge
                                         </label>
-                                        <input
-                                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                            name="formBasicChallenge" defaultValue={project.challengeName} id="challengename" type="text" placeholder="ex: Créer une calculatrice de A à Z"/>
+                                        <select defaultValue={project.challengeName} className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="formBasicChallenge">
+                                            <option value={"Projet personnel"}>Projet personnel</option>
+                                            {
+                                                challenges.map( challenge => <option  id="challengename" key={challenge.id} value={challenge.name}>{challenge.name}</option>)
+                                            }
+                                        </select>
                                     </div>
                                     <div className="mb-4">
                                         <label className="block text-gray-700 text-sm font-bold mb-2"
@@ -78,7 +103,8 @@ const ModifyProjectForm = ({show, handleClose, handleUpdate, project}) => {
                                         </label>
                                         <input
                                             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                            name="formBasicTitle" defaultValue={project.name} id="projectname" type="text" placeholder="ex: Calculeo"/>
+                                            name="formBasicTitle" defaultValue={project.name} id="projectname"
+                                            type="text" placeholder="ex: Calculeo"/>
                                     </div>
                                     <div className="mb-4">
                                         <label className="block text-gray-700 text-sm font-bold mb-2"
@@ -87,7 +113,8 @@ const ModifyProjectForm = ({show, handleClose, handleUpdate, project}) => {
                                         </label>
                                         <input
                                             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                            name="formBasicLink" defaultValue={project.link} id="projectlink" type="text" placeholder="ex: https://getlinked.dev"/>
+                                            name="formBasicLink" defaultValue={project.link} id="projectlink"
+                                            type="text" placeholder="ex: https://getlinked.dev"/>
                                     </div>
                                     <div className="mb-4">
                                         <label className="block text-gray-700 text-sm font-bold mb-2"
@@ -96,7 +123,8 @@ const ModifyProjectForm = ({show, handleClose, handleUpdate, project}) => {
                                         </label>
                                         <input
                                             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                            name="formBasicDateBegin" defaultValue={project.dateBegin} id="datebeginchallenge" type="date" />
+                                            name="formBasicDateBegin" defaultValue={project.dateBegin}
+                                            id="datebeginchallenge" type="date"/>
                                     </div>
                                     <div className="mb-4">
                                         <label className="block text-gray-700 text-sm font-bold mb-2"
@@ -105,7 +133,8 @@ const ModifyProjectForm = ({show, handleClose, handleUpdate, project}) => {
                                         </label>
                                         <input
                                             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                            name="formBasicDateFinish" defaultValue={project.dateFinish} id="datefinishchallenge" type="date" />
+                                            name="formBasicDateFinish" defaultValue={project.dateFinish}
+                                            id="datefinishchallenge" type="date"/>
                                     </div>
                                     <div className="mb-4">
                                         <label className="block text-gray-700 text-sm font-bold mb-2"
@@ -114,7 +143,9 @@ const ModifyProjectForm = ({show, handleClose, handleUpdate, project}) => {
                                         </label>
                                         <textarea
                                             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                            name="formBasicDescription" defaultValue={project.description} id="description"  placeholder="ex: J'ai pu apprendre de nouvelles choses sur..."/>
+                                            name="formBasicDescription" defaultValue={project.description}
+                                            id="description"
+                                            placeholder="ex: J'ai pu apprendre de nouvelles choses sur..."/>
                                     </div>
                                     <div className="mt-4">
                                         <button
