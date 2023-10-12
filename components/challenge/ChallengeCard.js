@@ -1,9 +1,9 @@
 import {Button, Card} from "react-bootstrap";
 import ModifyChallengeForm from "./ModifyChallengeForm";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import Link from "next/link";
 
-const ChallengeCard = ({challenge, handleShow, handleUpdate, isAdmin}) => {
+const ChallengeCard = ({challenge, handleShow, handleUpdate, isAdmin, isRecruiter}) => {
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShowForm = () => setShow(true);
@@ -28,7 +28,7 @@ const ChallengeCard = ({challenge, handleShow, handleUpdate, isAdmin}) => {
             <div className={"flex justify-between"}>
                 <div className={"text-xl font-bold"}>{challenge.name}</div>
                 {
-                    isAdmin && <div className={"space-x-2"}>
+                    (isAdmin || isRecruiter) && <div className={"space-x-2"}>
                         <Button
                             className={'bg-gray-900 text-white text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium'}
                             onClick={handleShowForm}>Modifier</Button>

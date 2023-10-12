@@ -13,6 +13,18 @@ export function Messaging() {
     const {data: session} = useSession()
 
     const [messages, setMessages] = useState({OOO: {username: "none", msg: "jji", createdAt: "OOOO"}});
+    const [participants, setParticipants] = useState([]);
+
+    const getParticipants = async () => {
+        const db = getDatabase(firebaseApp)
+        return onValue(ref(db, `rooms/${room}/participants`), (snapshot) => {
+            if (snapshot.val() == null) {
+                setParticipants([])
+            }
+            console.log(snapshot.val())
+            setParticipants(snapshot.val())
+        })
+    }
     const getMessages = async () => {
         const db = getDatabase(firebaseApp)
         return onValue(ref(db, `rooms/${room}/msg`), (snapshot) => {
@@ -28,12 +40,13 @@ export function Messaging() {
         if (router.isReady) {
             setMessages([])
             getMessages()
+            getParticipants()
         }
     }, [router.isReady])
     return (
         <div className="flex h-screen antialiased text-gray-800 mb-40">
             <div className="flex flex-row h-full w-full overflow-x-hidden flex-wrap">
-                <ChatSideBar room={room}/>
+                <ChatSideBar room={room} participants={participants}/>
                 <ChatMain room={room} messages={messages}/>
             </div>
         </div>

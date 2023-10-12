@@ -21,12 +21,12 @@ export default async function handler(req, res) {
         }
         // Supprime une étape en particulier
         if (req.method === "DELETE") {
-            if (session?.role !== 'admin' && session?.role !== 'superadmin')
+            if (session?.role !== 'admin' && session?.role !== 'superadmin' && session?.type !== "recruiter")
                 return res.status(401).json({message: "Unauthorized"})
             try {
                 const step = await prisma.step.delete({
                     where: {
-                        id: req.query.stepId
+                        id: req.query.stepId,
                     }
                 })
                 if (step)
@@ -37,7 +37,7 @@ export default async function handler(req, res) {
         }
         // Modifie une étape en particulier
         if (req.method === "PUT") {
-            if (session?.role !== 'admin' && session?.role !== 'superadmin')
+            if (session?.role !== 'admin' && session?.role !== 'superadmin' && session?.type !== "recruiter")
                 return res.status(401).json({message: "Unauthorized"})
             const step = await prisma.step.update({
                 where: {

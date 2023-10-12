@@ -3,7 +3,7 @@ import {useState} from "react";
 import AddChallengeForm from "./AddChallengeForm";
 import ChallengeCard from "./ChallengeCard";
 
-const ChallengeGroup = ({challenges, handleShow, handleUpdate, isAdmin}) => {
+const ChallengeGroup = ({challenges, handleShow, handleUpdate, isAdmin, isRecruiter}) => {
     const [show, setShow] = useState(false);
     const handleShowForm = () => {
         setShow(true);
@@ -19,7 +19,7 @@ const ChallengeGroup = ({challenges, handleShow, handleUpdate, isAdmin}) => {
         <div className={"bg-white text-black p-5 rounded-lg w-4/5"}>
             <div className={"flex justify-between"}>
                 <h1 className={"text-3xl font-bold"}>Challenges</h1>
-                {isAdmin && <button
+                {(isAdmin || isRecruiter) && <button
                     className={'bg-gray-900 text-white text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium'}
                     onClick={handleShowForm}>Ajouter</button>
                 }
@@ -29,6 +29,7 @@ const ChallengeGroup = ({challenges, handleShow, handleUpdate, isAdmin}) => {
                     challenges.map(challenge =>
                         <ChallengeCard key={challenge.id}
                                        isAdmin={isAdmin}
+                                       isRecruiter={isRecruiter}
                                        challenge={challenge}
                                        handleShow={handleShow}
                                        handleUpdate={handleUpdateForm}/>

@@ -18,10 +18,10 @@ const addChallengeForm = ({ show, handleClose, handleUpdate }) => {
         }
         const response = await fetch(`/api/challenges`, parameters)
 
-        if(response.ok) {
+        //if(response.ok) {
             console.log(await response.json())
             handleUpdate();
-        }
+       // }
     }
 
     return (

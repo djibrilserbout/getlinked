@@ -19,20 +19,20 @@ export default async function handler(req, res) {
     if(session) {
         // Ajoute un nouveau challenge
         if (req.method === "POST") {
-            if (session?.role !== 'admin' && session?.role !== 'superadmin')
+            if (session?.role !== 'admin' && session?.role !== 'superadmin' && session?.type !== "recruiter")
                 return res.status(401).json({message: "Unauthorized"})
             try {
-
                 const challenge = await prisma.challenge.create({
                     data: {
-                        name: req.body.name ?? null
+                        name: req.body.name ?? null,
+                        userId: session.user.id
                     }
                 })
                 if (challenge)
                     // Challenge créé
                     res.status(201).json({message: "Created Successfully!", challenge})
                 else
-                    res.status(404).json({message: "Error"})
+                    res.status(404).json({message: "Error", challenge})
 
             } catch (e) {
                 res.status(404).json({message: e.message})

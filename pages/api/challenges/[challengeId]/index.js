@@ -20,12 +20,13 @@ export default async function handler(req, res) {
         }
         // Supprime un challenge en particulier
         if (req.method === "DELETE") {
-            if (session?.role !== 'admin' && session?.role !== 'superadmin')
+            if (session?.role !== 'admin' && session?.role !== 'superadmin' && session?.type !== "recruiter")
                 return res.status(401).json({message: "Unauthorized"})
             try {
                 const challenge = await prisma.challenge.delete({
                     where: {
-                        id: req.query.challengeId
+                        id: req.query.challengeId,
+                        userId: session.user.id
                     }
                 })
                 if (challenge)
@@ -38,11 +39,12 @@ export default async function handler(req, res) {
         }
         //Modifie un challenge en particulier
         if (req.method === "PUT") {
-            if (session?.role !== 'admin' && session?.role !== 'superadmin')
+            if (session?.role !== 'admin' && session?.role !== 'superadmin' && session?.type !== "recruiter")
                 return res.status(401).json({message: "Unauthorized"})
             const challenge = await prisma.challenge.update({
                 where: {
                     id: req.query.challengeId,
+                    userId: session.user.id
                 },
                 data: {
                     name: req.body.name,

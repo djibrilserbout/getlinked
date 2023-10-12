@@ -22,7 +22,7 @@ export default async function handler(req, res) {
     if (session) {
         // Ajoute une étape à un challenge
         if (req.method === "POST") {
-            if (session?.role !== 'admin' && session?.role !== 'superadmin')
+            if (session?.role !== 'admin' && session?.role !== 'superadmin' && session?.type !== "recruiter")
                 return res.status(401).json({message: "Unauthorized"})
             try {
                 const step = await prisma.step.create({

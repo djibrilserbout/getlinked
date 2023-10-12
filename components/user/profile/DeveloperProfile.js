@@ -8,6 +8,7 @@ import {useSession} from "next-auth/react";
 import {useEffect, useState} from "react";
 
 const DeveloperProfile = ({user, handleClose, handleShow, handleUpdate, isAdmin, isMine, show}) => {
+    const basicPicture = "https://fastly.picsum.photos/id/866/200/300.jpg?hmac=rcadCENKh4rD6MAp6V_ma-AyWv641M4iiOpe1RyFHeI";
     const {data: session} = useSession()
     const [room, setRoom] = useState("");
 
@@ -21,24 +22,24 @@ const DeveloperProfile = ({user, handleClose, handleShow, handleUpdate, isAdmin,
 
     function loadRoom() {
         const db = getDatabase(firebaseApp)
-        get(ref(db, `rooms/${session.user.name}-${user.name}`)).then((snapshot) => {
+        get(ref(db, `rooms/${session.user.id}-${user.id}`)).then((snapshot) => {
             if (snapshot.exists()) {
                 console.log(snapshot.val());
-                setRoom(`${session.user.name}-${user.name}`)
+                setRoom(`${session.user.id}-${user.id}`)
             } else {
-                get(ref(db, `rooms/${user.name}-${session.user.name}`)).then((snapshot) => {
+                get(ref(db, `rooms/${user.id}-${session.user.id}`)).then((snapshot) => {
                     if (snapshot.exists()) {
                         console.log(snapshot.val());
-                        setRoom(`${user.name}-${session.user.name}`)
+                        setRoom(`${user.id}-${session.user.id}`)
                     } else {
-                        set(ref(db, `rooms/${session.user.name}-${user.name}`), {
+                        set(ref(db, `rooms/${session.user.id}-${user.id}`), {
                             "participants": [
                                 session.user.name,
                                 user.name
                             ],
                             "msg": {}
                         })
-                        setRoom(`${session.user.name}-${user.name}`)
+                        setRoom(`${session.user.id}-${user.id}`)
                         console.log(snapshot.val());
                     }
                 }).catch((error) => {
@@ -59,7 +60,7 @@ const DeveloperProfile = ({user, handleClose, handleShow, handleUpdate, isAdmin,
 
                         <Image className={"rounded-full"}
                             layout={"fill"}
-                               src={user.image} alt="Profile picture"/>
+                               src={user.image ?? basicPicture} alt="Profile picture"/>
                     </div>
                 </div>
                 <div className="px-6 pt-12">
