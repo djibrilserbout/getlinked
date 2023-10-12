@@ -13,7 +13,9 @@ const DeveloperProfile = ({user, handleClose, handleShow, handleUpdate, isAdmin,
 
     useEffect(() => {
 
-        loadRoom()
+        if(session) {
+            loadRoom()
+        }
 
     }, [])
 
@@ -75,7 +77,7 @@ const DeveloperProfile = ({user, handleClose, handleShow, handleUpdate, isAdmin,
                     <p className="text-gray-700 text-base mb-4">
                         {user.description}
                     </p>
-                    {!isMine &&
+                    {(!isMine && session !== null) &&
 
                         <a
                             className={'inline-flex py-2 px-4 items-center bg-gray-900 text-white text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium'}

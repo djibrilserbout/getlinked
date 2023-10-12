@@ -20,6 +20,7 @@ const AddStepForm = ({show, challengeId, handleClose, handleUpdate}) => {
 
         if (response.ok) {
             console.log(await response.json())
+            handleUpdate();
         }
     }
     return (

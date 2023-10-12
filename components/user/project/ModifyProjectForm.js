@@ -25,6 +25,7 @@ const ModifyProjectForm = ({show, handleClose, handleUpdate, project}) => {
 
         if(response.ok) {
             console.log(await response.json())
+            handleUpdate();
         }
     }
     return (

@@ -1,64 +1,67 @@
 import prisma from '../../../../../lib/prisma';
 import {getSession} from "next-auth/react";
+import {getServerSession} from "next-auth";
+import {authOptions} from "../../../auth/[...nextauth]";
 
 export default async function handler(req, res) {
-    const session = await getSession({req})
-    // Affiche une formation
-    if (req.method === "GET") {
-        const education = await prisma.education.findUnique({
-            where: {
-                id: req.query.educationId,
-            },
-        });
-        if(education)
-            return res.status(200).json(education);
-        if(!education)
-            return res.status(404).json({message: "Not found"});
-    }
-    // Supprime la formation
-    if (req.method === "DELETE") {
-        if(session?.role !== 'admin' && session?.role !== 'superadmin' && session?.user.id !== req.query.userId)
-            return res.status(401).json({message: "Unauthorized"})
-        try {
-            const education = await prisma.education.delete({
+    const session = await getServerSession(req, res, authOptions)
+    if (session) {
+        // Affiche une formation
+        if (req.method === "GET") {
+            const education = await prisma.education.findUnique({
                 where: {
-                    id: req.query.educationId
-                }
-            })
+                    id: req.query.educationId,
+                },
+            });
             if (education)
-                return res.status(200).json({message: "Successfully deleted!"});
+                return res.status(200).json(education);
+            if (!education)
+                return res.status(404).json({message: "Not found"});
         }
-        catch {
-            return res.status(404).json({message: "Not Found"})
-        }
-
-    }
-    // Modifie la formation
-    if (req.method === "PUT") {
-        if(session?.role !== 'admin' && session?.role !== 'superadmin' && session?.user.id !== req.query.userId)
-            return res.status(401).json({message: "Unauthorized"})
-        const education = await prisma.education.update({
-            where: {
-                id: req.query.educationId,
-            },
-            data: {
-                name: req.body.name,
-                description: req.body.description,
-                dateBegin: req.body.dateBegin,
-                dateFinish: req.body.dateFinish,
-                schoolName: req.body.schoolName
+        // Supprime la formation
+        if (req.method === "DELETE") {
+            if (session?.role !== 'admin' && session?.role !== 'superadmin' && session?.user.id !== req.query.userId)
+                return res.status(401).json({message: "Unauthorized"})
+            try {
+                const education = await prisma.education.delete({
+                    where: {
+                        id: req.query.educationId
+                    }
+                })
+                if (education)
+                    return res.status(200).json({message: "Successfully deleted!"});
+            } catch {
+                return res.status(404).json({message: "Not Found"})
             }
-        });
-        if (education)
-            return res.status(200).json({message: "Successfully updated", education });
-        else
-            return res.status(404).json({message: "Not found"});
 
+        }
+        // Modifie la formation
+        if (req.method === "PUT") {
+            if (session?.role !== 'admin' && session?.role !== 'superadmin' && session?.user.id !== req.query.userId)
+                return res.status(401).json({message: "Unauthorized"})
+            const education = await prisma.education.update({
+                where: {
+                    id: req.query.educationId,
+                },
+                data: {
+                    name: req.body.name,
+                    description: req.body.description,
+                    dateBegin: req.body.dateBegin,
+                    dateFinish: req.body.dateFinish,
+                    schoolName: req.body.schoolName
+                }
+            });
+            if (education)
+                return res.status(200).json({message: "Successfully updated", education});
+            else
+                return res.status(404).json({message: "Not found"});
+
+        } else {
+            // Methode non implémentée
+            return res.status(501).json({message: "Not implemented"})
+        }
+
+    } else {
+        return res.status(404).json({message: "Error"})
     }
-    else {
-        // Methode non implémentée
-        return res.status(501).json({message: "Not implemented"})
-    }
-
-
 }

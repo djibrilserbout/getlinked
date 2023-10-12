@@ -59,7 +59,9 @@ const ProjectCard = ({project, handleUpdate, isAdmin, isMine}) => {
                         </div>
                     }
                 </div>
+                <div className={"text-lg font-semibold"}>Challenge : {project.challengeName}</div>
                 <h4 className={"text-lg"}>{project.companyName}</h4>
+                <a href={project.link} className={"text-lg text-decoration-underline  hover:text-decoration-no-underline"}>Lien vers le projet</a>
                 <div className={"text-gray-600"}>
                     {project.dateBegin} - {project.dateFinish}
                 </div>

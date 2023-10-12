@@ -20,6 +20,7 @@ const ModifyChallengeForm = ({show, handleClose, handleUpdate, challenge}) => {
 
         if(response.ok) {
             console.log(await response.json())
+            handleUpdate();
         }
     }
     return (
